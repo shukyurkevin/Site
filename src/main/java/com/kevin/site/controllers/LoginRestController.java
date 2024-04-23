@@ -32,6 +32,15 @@ public class LoginRestController {
   WebSecurityConfig webSecurityConfig;
 
 
+  @GetMapping("/")
+  public ResponseEntity<?> redirectToHello() {
+    return ResponseEntity.status(302).header("Location", "/hello").build();
+  }
+
+  @GetMapping("/hello")
+  public String hello() {
+    return "HI NIGGER";
+  }
   @PostMapping("/register")
   public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDTO userDto) {
     return authService.registerUser(userDto);
