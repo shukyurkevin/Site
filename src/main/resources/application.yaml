@@ -3,9 +3,9 @@ spring:
   application:
     name: validation
   datasource:
-    url: jdbc:mysql://sql11.freesqldatabase.com:3306/sql11701172
-    username: sql11701172
-    password: iMXl3AGsnp
+    url: jdbc:mysql://sql11.freesqldatabase.com:3306/sql11701187
+    username: sql11701187
+    password: WwSJKpeiXu
     driver-class-name: com.mysql.cj.jdbc.Driver
 security:
   jwt:
