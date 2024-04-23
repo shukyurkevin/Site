@@ -3,14 +3,11 @@ spring:
   application:
     name: validation
   datasource:
-    url: jdbc:mysql://sql11.freesqldatabase.com:3306/sql11701187
-    username: sql11701187
-    password: WwSJKpeiXu
+    url: jdbc:mysql://viaduct.proxy.rlwy.net:21785/railway
+    username: root
+    password: MtXNEqZCyilCAgueDJqnIGAagWvcXklm
     driver-class-name: com.mysql.cj.jdbc.Driver
 security:
   jwt:
     secret-key: goodsecret
 
-
-server:
-  port: 8080
