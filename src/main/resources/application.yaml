@@ -11,3 +11,5 @@ security:
   jwt:
     secret-key: goodsecret
 
+server:
+  port: 8080
