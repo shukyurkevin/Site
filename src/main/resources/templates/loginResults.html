@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container" th:object="${loginModel}">
+  <p>Username: <span th:text="*{username}"></span></p>
+  <p>Password: <span th:text="*{password}"></span></p>
+</div>
+</body>
+</html>

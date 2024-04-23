@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml" layout:decorate="layouts/defaultLayout">
+
+<div layout:fragment="content">
+<h2 th:text="${title}"></h2>
+<table class="table table-responsive table-striped">
+  <thead>
+  <tr>
+    <th scope="col">Id</th>
+    <th scope="col">Title</th>
+    <th scope="col">Rating</th>
+    <th scope="col">Genres</th>
+    <th scope="col">Authors</th>
+    <th scope="col">ReleaseYear</th>
+    <th scope="col">DurationMinutes</th>
+    <th scope="col">Language</th>
+    <th scope="col">Type</th>
+    <th scope="col">Cast</th>
+    <th scope="col">CoverImageURL</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="film:${films}">
+    <td th:text="${film.id}"></td>
+    <td th:text="${film.title}"></td>
+    <td th:text="${film.rating}"></td>
+    <td th:text="${film.genres}"></td>
+    <td th:text="${film.authors}"></td>
+    <td th:text="${film.releaseYear}"></td>
+    <td th:text="${film.durationMinutes}"></td>
+    <td th:text="${film.language}"></td>
+    <td th:text="${film.type}"></td>
+    <td th:text="${film.cast}"></td>
+    <td><img th:src="${film.coverImageUrl}" alt="Cover Image" width="100"></td>
+  </tr>
+  </tbody>
+</table>
+</div>
+
+</html>

@@ -1,0 +1,69 @@
+package com.kevin.site.services;
+
+import com.kevin.site.interfaces.FilmDataAccessInterface;
+import com.kevin.site.models.FilmModel;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+@Service
+public class FilmService implements FilmServiceInterface {
+  final
+  FilmDataAccessInterface<FilmModel> filmDAO;
+  @Autowired
+  public FilmService(FilmDataAccessInterface<FilmModel> filmDAO) {
+    this.filmDAO = filmDAO;
+  }
+
+
+  @Override
+  public void test() {
+    System.out.println("Order Service is working");
+  }
+
+  @Override
+  public void init() {
+    System.out.println("init orderService");
+  }
+
+  @Override
+  public void destroy() {
+    System.out.println("destroy orderService");
+
+  }
+
+  @Override
+  public List<FilmModel> getFilms() {
+
+    return filmDAO.getFilms();
+
+  }
+
+  @Override
+  public List<FilmModel> searchFilms(String searchTerm) {
+    return filmDAO.searchFilms(searchTerm);
+  }
+
+  @Override
+  public Long addOne(FilmModel newFilm) {
+
+    return filmDAO.addOne(newFilm);
+  }
+
+  @Override
+  public boolean deleteOne(Long id) {
+
+    return filmDAO.deleteOne(id);
+  }
+
+  @Override
+  public FilmModel updateOne(Long idToUpdate, FilmModel newOrder) {
+
+    return filmDAO.updateOne(idToUpdate,newOrder);
+  }
+
+  @Override
+  public FilmModel getById(Long id) {
+
+    return filmDAO.getById(id);
+  }
+}

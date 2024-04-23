@@ -1,0 +1,12 @@
+#mysql connection from mamp
+spring:
+  application:
+    name: validation
+  datasource:
+    url: jdbc:mysql://localhost:3306/streamService
+    username: tester
+    password: passExample
+    driver-class-name: com.mysql.cj.jdbc.Driver
+security:
+  jwt:
+    secret-key: goodsecret

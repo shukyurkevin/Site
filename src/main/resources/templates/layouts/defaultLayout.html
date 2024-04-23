@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+
+  <link href="/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+
+<div th:insert="~{layouts/commonHeader :: header}"> Here is the header </div>
+
+<section layout:fragment="content">
+  <p>Some content</p>
+</section>
+
+<div th:insert="~{layouts/commonFooter :: footer}"> Here is the footer  </div>
+<script src="/js/bootstrap.bundle.js"></script>
+</body>
+</html>

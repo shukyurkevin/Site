@@ -1,0 +1,63 @@
+package com.kevin.site.services;
+
+import com.kevin.site.dto.UserLoginDTO;
+import com.kevin.site.dto.UserRegistrationDTO;
+import com.kevin.site.entity.UserEntity;
+import com.kevin.site.models.LoginResponse;
+import com.kevin.site.models.UserModel;
+import com.kevin.site.security.JwtIssuer;
+import com.kevin.site.security.UserPrincipal;
+import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
+@Service
+@RequiredArgsConstructor
+public class AuthService {
+  private final UserService userService;
+  private final PasswordEncoder passwordEncoder;
+  private final JwtIssuer jwtIssuer;
+  ModelMapper modelMapper = new ModelMapper();
+  public String auth(UserLoginDTO userDto){
+
+    if (!userService.existsByUsername(userDto.getUsername())) {
+      return null;
+    }
+    UserModel user = userService.findByUsername(userDto.getUsername());
+
+    var token = jwtIssuer.issue(user.getUserId(),user.getUsername(), List.of(user.getRoles()));
+
+
+    if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
+      return "Wrong password";
+    }
+
+
+    return token;
+  }
+  public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDTO userDto) {
+    if (userService.existsByUsername(userDto.getUsername())) {
+      return ResponseEntity.badRequest().body("Username is already taken!");
+    }
+
+    if (userService.existsByEmail(userDto.getEmail())) {
+      return ResponseEntity.badRequest().body("Email is already taken!");
+    }
+
+    UserEntity user = new UserEntity();
+    user.setUsername(userDto.getUsername());
+    user.setPassword(passwordEncoder.encode(userDto.getPassword()));
+    user.setEmail(userDto.getEmail());
+    user.setRoles("ROLE_USER");
+    UserModel userModel = modelMapper.map(user, UserModel.class);
+    userService.createUser(userModel);
+
+    return ResponseEntity.ok("User registered successfully!");
+  }
+}

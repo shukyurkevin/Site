@@ -1,0 +1,62 @@
+package com.kevin.site.controllers;
+
+import com.kevin.site.models.FilmModel;
+import com.kevin.site.services.FilmServiceInterface;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/v1/films")
+public class FilmRestController {
+  FilmServiceInterface filmService;
+
+  @Autowired
+  public FilmRestController(FilmServiceInterface filmService) {
+    super();
+    this.filmService = filmService;
+  }
+
+  @GetMapping("/")
+  public List<FilmModel> showAllOrders(){
+
+    return filmService.getFilms();
+  }
+
+  @GetMapping("/search/{searchTerm}")
+  public List<FilmModel> searchOrders(@PathVariable(name = "searchTerm") String x){
+
+
+    return filmService.searchFilms(x);
+  }
+
+  @PostMapping("/")
+  public long addFilm(@RequestBody FilmModel model){
+    return filmService.addOne(model);
+  }
+
+
+  @GetMapping("/{id}")
+  public FilmModel getById(@PathVariable(name = "id") Long x){
+
+    return filmService.getById(x);
+  }
+
+  @GetMapping("/delete/{id}")
+  public boolean deleteOrder(@PathVariable(name = "id") Long x){
+
+    return filmService.deleteOne(x);
+  }
+
+  @PutMapping("/update/{id}")
+  public FilmModel addFilm(@RequestBody FilmModel model, @PathVariable(name = "id") Long x){
+
+    return filmService.updateOne(x,model);
+  }
+}
