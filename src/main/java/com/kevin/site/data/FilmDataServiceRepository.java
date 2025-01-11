@@ -74,4 +74,12 @@ public class FilmDataServiceRepository implements FilmDataAccessInterface<FilmMo
     FilmEntity result = filmRepositoryInterface.save(entity);
     return modelMapper.map(result,FilmModel.class);
   }
+  @Override
+  public List<FilmModel> getLatestFilms() {
+    List<FilmEntity> filmEntities = filmRepositoryInterface.findTop6ByOrderByIdDesc();
+    List<FilmModel> films = new ArrayList<>();
+    filmEntities.forEach(film->films.add(modelMapper.map(film,FilmModel.class)));
+    return films;
+  }
+
 }

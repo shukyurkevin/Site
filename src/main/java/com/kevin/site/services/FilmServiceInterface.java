@@ -14,4 +14,5 @@ public interface FilmServiceInterface {
   public boolean deleteOne(Long id);
   public FilmModel updateOne(Long id, FilmModel newOrder);
   public FilmModel getById(Long id);
+  public List<FilmModel> getLatestFilms();
 }

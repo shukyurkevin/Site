@@ -37,10 +37,13 @@ public class WebSecurityConfig {
         .exceptionHandling(h -> h.authenticationEntryPoint(unauthorizedHandler))
         .authorizeHttpRequests(registry -> registry
             .requestMatchers("/").permitAll()
+            .requestMatchers("/api/v1/films/").permitAll()
+            .requestMatchers("/api/v1/films/search/**").permitAll()
             .requestMatchers("/hello").permitAll()
             .requestMatchers("/login").permitAll()
             .requestMatchers("/register").permitAll()
             .requestMatchers("/error").permitAll()
+            .requestMatchers("/api/v1/films/latest").permitAll()
             .requestMatchers("/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated())
         .httpBasic(Customizer.withDefaults());

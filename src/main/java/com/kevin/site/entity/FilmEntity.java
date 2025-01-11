@@ -4,74 +4,123 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-@Table("movies")
-public class FilmEntity {
-  @Id
-  @Column("Id")
-  private int id;
-  @Column("Title")
-  private String title;
-  @Column("Rating")
-  private float rating;
-  @Column("Genres")
-  private String genres;
-  @Column("Authors")
-  private String authors;
-  @Column("ReleaseYear")
-  private int releaseYear;
-  @Column("DurationMinutes")
-  private int durationMinutes;
-  @Column("Description")
-  private String description;
-  @Column("Language")
-  private String language;
-  @Column("Type")
-  private String type;
-  @Column("Cast")
-  private String cast;
-  @Column("CoverImageURL")
-  private String coverImageUrl;
-  @Column("VideoURL")
-  private String videoURL;
+  @Table("movies")
+  public class FilmEntity {
+    @Id
+    @Column("Id")
+    private int id;
+    @Column("Title")
+    private String title;
+    @Column("Rating")
+    private float rating;
+    @Column("Genres")
+    private String genres;
+    @Column("Authors")
+    private String authors;
+    @Column("ReleaseYear")
+    private int releaseYear;
+    @Column("DurationMinutes")
+    private int durationMinutes;
+    @Column("Description")
+    private String description;
+    @Column("Language")
+    private String language;
+    @Column("Type")
+    private String type;
+    @Column("Cast")
+    private String cast;
+    @Column("CoverImageURL")
+    private String coverImageUrl;
+    @Column("FilmImageURL")
+    private String filmImageUrl;
+    @Column("VideoURL")
+    private String videoURL;
+    @Column("AgeRating")
+    private String ageRating;
+    @Column("Seasons")
+    private int seasons;
+    @Column("Episodes")
+    private int episodes;
   public FilmEntity(){
 
   }
 
-  @Override
-  public String toString() {
-    return "FilmEntity{" +
-        "id=" + id +
-        ", title='" + title + '\'' +
-        ", rating=" + rating +
-        ", genres='" + genres + '\'' +
-        ", authors='" + authors + '\'' +
-        ", releaseYear=" + releaseYear +
-        ", durationMinutes=" + durationMinutes +
-        ", description='" + description + '\'' +
-        ", language='" + language + '\'' +
-        ", type='" + type + '\'' +
-        ", cast='" + cast + '\'' +
-        ", coverImageUrl='" + coverImageUrl + '\'' +
-        ", videoURL='" + videoURL + '\'' +
-        '}';
+    @Override
+    public String toString() {
+      return "FilmEntity{" +
+          "id=" + id +
+          ", title='" + title + '\'' +
+          ", rating=" + rating +
+          ", genres='" + genres + '\'' +
+          ", authors='" + authors + '\'' +
+          ", releaseYear=" + releaseYear +
+          ", durationMinutes=" + durationMinutes +
+          ", description='" + description + '\'' +
+          ", language='" + language + '\'' +
+          ", type='" + type + '\'' +
+          ", cast='" + cast + '\'' +
+          ", coverImageUrl='" + coverImageUrl + '\'' +
+          ", filmImageUrl='" + filmImageUrl + '\'' +
+          ", videoURL='" + videoURL + '\'' +
+          ", ageRating='" + ageRating + '\'' +
+          ", seasons=" + seasons +
+          ", episodes=" + episodes +
+          '}';
+    }
+
+    public FilmEntity(int id, String title, float rating, String genres, String authors,
+                      int releaseYear, int durationMinutes, String description, String language,
+                      String type, String cast, String coverImageUrl, String filmImageUrl,
+                      String videoURL, String ageRating, int seasons, int episodes) {
+      this.id = id;
+      this.title = title;
+      this.rating = rating;
+      this.genres = genres;
+      this.authors = authors;
+      this.releaseYear = releaseYear;
+      this.durationMinutes = durationMinutes;
+      this.description = description;
+      this.language = language;
+      this.type = type;
+      this.cast = cast;
+      this.coverImageUrl = coverImageUrl;
+      this.filmImageUrl = filmImageUrl;
+      this.videoURL = videoURL;
+      this.ageRating = ageRating;
+      this.seasons = seasons;
+      this.episodes = episodes;
+    }
+
+    public int getEpisodes() {
+      return episodes;
+    }
+
+    public void setEpisodes(int episodes) {
+      this.episodes = episodes;
+    }
+
+    public int getSeasons() {
+      return seasons;
+    }
+
+    public void setSeasons(int seasons) {
+      this.seasons = seasons;
+    }
+
+    public String getAgeRating() {
+    return ageRating;
   }
 
-  public FilmEntity(int id, String title, float rating, String genres, String authors,
-                    int releaseYear, int durationMinutes, String description, String language,
-                    String type, String cast, String coverImageUrl, String videoURL) {
-    this.id = id;
-    this.title = title;
-    this.rating = rating;
-    this.genres = genres;
-    this.authors = authors;
-    this.releaseYear = releaseYear;
-    this.durationMinutes = durationMinutes;
-    this.description = description;
-    this.language = language;
-    this.type = type;
-    this.cast = cast;
-    this.coverImageUrl = coverImageUrl;
-    this.videoURL = videoURL;
+  public void setAgeRating(String ageRating) {
+    this.ageRating = ageRating;
+  }
+
+  public String getFilmImageUrl() {
+    return filmImageUrl;
+  }
+
+  public void setFilmImageUrl(String filmImageUrl) {
+    this.filmImageUrl = filmImageUrl;
   }
 
   public String getVideoURL() {

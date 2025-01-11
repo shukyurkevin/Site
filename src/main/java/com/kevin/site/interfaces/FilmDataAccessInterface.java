@@ -1,5 +1,6 @@
 package com.kevin.site.interfaces;
 
+import com.kevin.site.models.FilmModel;
 import java.util.List;
 
 public interface FilmDataAccessInterface <T> {
@@ -9,5 +10,6 @@ public interface FilmDataAccessInterface <T> {
   public Long addOne(T newOrder);
   public boolean deleteOne(Long id);
   public T updateOne(Long id, T filmModel);
+  public List<FilmModel> getLatestFilms();
 
 }

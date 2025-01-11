@@ -24,19 +24,19 @@ public class FilmRestController {
   }
 
   @GetMapping("/")
-  public List<FilmModel> showAllOrders(){
+  public List<FilmModel> showAllFilms(){
 
     return filmService.getFilms();
   }
 
   @GetMapping("/search/{searchTerm}")
-  public List<FilmModel> searchOrders(@PathVariable(name = "searchTerm") String x){
+  public List<FilmModel> searchFilms(@PathVariable(name = "searchTerm") String x){
 
 
     return filmService.searchFilms(x);
   }
 
-  @PostMapping("/")
+  @PostMapping("/add")
   public long addFilm(@RequestBody FilmModel model){
     return filmService.addOne(model);
   }
@@ -49,7 +49,7 @@ public class FilmRestController {
   }
 
   @GetMapping("/delete/{id}")
-  public boolean deleteOrder(@PathVariable(name = "id") Long x){
+  public boolean deleteFilms(@PathVariable(name = "id") Long x){
 
     return filmService.deleteOne(x);
   }
@@ -59,4 +59,9 @@ public class FilmRestController {
 
     return filmService.updateOne(x,model);
   }
+  @GetMapping("/latest")
+  public List<FilmModel> getLatestFilms(){
+    return filmService.getLatestFilms();
+  }
+
 }

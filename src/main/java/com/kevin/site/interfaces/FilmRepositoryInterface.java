@@ -17,5 +17,6 @@ public interface FilmRepositoryInterface extends CrudRepository<FilmEntity, Long
     }
     return false;
   }
+  List<FilmEntity> findTop6ByOrderByIdDesc();
 
 }

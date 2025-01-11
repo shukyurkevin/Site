@@ -1,10 +1,10 @@
 package com.kevin.site.services;
 
 import com.kevin.site.data.UserDataService;
-import com.kevin.site.entity.UserEntity;
-import com.kevin.site.interfaces.UserDataAccessInterface;
+import com.kevin.site.models.FilmModel;
 import com.kevin.site.models.UserModel;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -51,5 +51,49 @@ public class UserService{
 
   public UserModel findByUsername(String username) {
    return userDao.findByUsername(username);
+  }
+
+  public List<FilmModel> getAllFavorites(Long userId){
+   return userDao.getFavoriteFilms(userId);
+  }
+  public List<FilmModel> getAllDrop(Long userId){
+    return userDao.getDropFilms(userId);
+  }
+  public List<FilmModel> getAllToWatch(Long userId){
+    return userDao.getToWatchFilms(userId);
+  }
+  public List<FilmModel> getAllOnWatch(Long userId){
+    return userDao.getOnWatchFilms(userId);
+  }
+  public void addToFavorite(Long userId, Long filmId){
+    userDao.addToFavorite(userId,filmId);
+  }
+  public void deleteFromFavorite(Long userId, Long filmId){
+   userDao.deleteFromFavorite(userId,filmId);
+  }
+  public void addToOnWatchList(Long userId, Long filmId){
+   userDao.addToOnWatchList(userId,filmId);
+  }
+  public void deleteFromOnWatchList(Long userId, Long filmId){
+    userDao.deleteFromOnWatchList(userId,filmId);
+  }
+  public void addToToWatchList(Long userId, Long filmId){
+    userDao.addToToWatchList(userId,filmId);
+  }
+  public void deleteFromToWatchList(Long userId, Long filmId) {
+    userDao.deleteFromToWatchList(userId, filmId);
+  }
+  public void addToDrop(Long userId, Long filmId){
+    userDao.addToDrop(userId,filmId);
+  }
+  public void deleteFromDrop(Long userId, Long filmId) {
+    userDao.deleteFromDrop(userId, filmId);
+  }
+  public void updateWatchProgress(Long userId, List<Map<String, Object>> watchProgress)
+      throws Exception {
+   userDao.updateWatchProgress(userId,watchProgress);
+  }
+  public List<Map<String, Object>> getWatchProgress(Long userId) throws Exception{
+   return userDao.getWatchProgress(userId);
   }
 }

@@ -1,5 +1,6 @@
 package com.kevin.site.models;
 
+
 public class FilmModel {
   private int id;
   private String title;
@@ -13,7 +14,11 @@ public class FilmModel {
   private String type;
   private String cast;
   private String coverImageUrl;
+  private String filmImageUrl;
   private String videoURL;
+  private String ageRating;
+  private int seasons;
+  private int episodes;
   public FilmModel(){
 
   }
@@ -22,7 +27,8 @@ public class FilmModel {
 
   public FilmModel(int id, String title, float rating, String genres, String authors,
                    int releaseYear, int durationMinutes, String description, String language,
-                   String type, String cast, String coverImageUrl, String videoURL) {
+                   String type, String cast, String coverImageUrl, String filmImageUrl, String videoURL,
+                   String ageRating, int seasons) {
     this.id = id;
     this.title = title;
     this.rating = rating;
@@ -35,7 +41,42 @@ public class FilmModel {
     this.type = type;
     this.cast = cast;
     this.coverImageUrl = coverImageUrl;
+    this.filmImageUrl = filmImageUrl;
     this.videoURL = videoURL;
+    this.ageRating = ageRating;
+    this.seasons = seasons;
+  }
+
+  public int getSeasons() {
+    return seasons;
+  }
+
+  public void setSeasons(int seasons) {
+    this.seasons = seasons;
+  }
+
+  public int getEpisodes() {
+    return episodes;
+  }
+
+  public void setEpisodes(int episodes) {
+    this.episodes = episodes;
+  }
+
+  public String getAgeRating() {
+    return ageRating;
+  }
+
+  public void setAgeRating(String ageRating) {
+    this.ageRating = ageRating;
+  }
+
+  public String getFilmImageUrl() {
+    return filmImageUrl;
+  }
+
+  public void setFilmImageUrl(String filmImageUrl) {
+    this.filmImageUrl = filmImageUrl;
   }
 
   public String getVideoURL() {

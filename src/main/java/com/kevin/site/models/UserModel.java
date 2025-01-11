@@ -26,6 +26,15 @@ public class UserModel {
   @NotNull
   private String roles;
 
+  private String watchProgress;
+
+  public String getWatchProgress() {
+    return watchProgress;
+  }
+
+  public void setWatchProgress(String watchProgress) {
+    this.watchProgress = watchProgress;
+  }
 
   public Long getUserId() {
     return userId;

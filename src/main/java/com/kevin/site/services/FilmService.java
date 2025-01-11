@@ -17,17 +17,17 @@ public class FilmService implements FilmServiceInterface {
 
   @Override
   public void test() {
-    System.out.println("Order Service is working");
+    System.out.println("Film Service is working");
   }
 
   @Override
   public void init() {
-    System.out.println("init orderService");
+    System.out.println("init filmService");
   }
 
   @Override
   public void destroy() {
-    System.out.println("destroy orderService");
+    System.out.println("destroy filmService");
 
   }
 
@@ -65,5 +65,9 @@ public class FilmService implements FilmServiceInterface {
   public FilmModel getById(Long id) {
 
     return filmDAO.getById(id);
+  }
+  @Override
+  public List<FilmModel> getLatestFilms() {
+    return filmDAO.getLatestFilms();
   }
 }

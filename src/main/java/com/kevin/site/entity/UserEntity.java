@@ -1,6 +1,7 @@
 package com.kevin.site.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import java.util.Set;
 import lombok.AllArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.Id;
@@ -24,10 +25,21 @@ public class UserEntity {
 
   @Column("Email")
   private String email;
+
   @Column("Roles")
   private String roles;
   public UserEntity(){
 
+  }
+  @Column("watch_progress")
+  private String watchProgress;
+
+  public String getWatchProgress() {
+    return watchProgress;
+  }
+
+  public void setWatchProgress(String watchProgress) {
+    this.watchProgress = watchProgress;
   }
 
   public String getRoles() {
