@@ -42,7 +42,10 @@ public class FilmService implements FilmServiceInterface {
   public List<FilmModel> searchFilms(String searchTerm) {
     return filmDAO.searchFilms(searchTerm);
   }
-
+  @Override
+  public List<FilmModel> searchByGenres(String searchTerm){
+    return filmDAO.searchByGenres(searchTerm);
+  }
   @Override
   public Long addOne(FilmModel newFilm) {
 
@@ -69,5 +72,14 @@ public class FilmService implements FilmServiceInterface {
   @Override
   public List<FilmModel> getLatestFilms() {
     return filmDAO.getLatestFilms();
+  }
+
+  @Override
+  public List<FilmModel> getSeries(){
+    return filmDAO.getSeries();
+  }
+  @Override
+  public List<FilmModel> getOnlyFilms(){
+    return filmDAO.getOnlyFilms();
   }
 }

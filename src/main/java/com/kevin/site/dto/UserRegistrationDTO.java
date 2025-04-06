@@ -5,7 +5,6 @@ public class UserRegistrationDTO {
   private String password;
   private String email;
 
-  // Геттеры и сеттеры
   public String getUsername() {
     return username;
   }

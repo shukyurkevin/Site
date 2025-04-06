@@ -28,7 +28,7 @@ public class WebSecurityConfig {
     http.addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
     http
-        .cors(Customizer.withDefaults())
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .csrf(AbstractHttpConfigurer::disable)
         .securityMatcher("/**")
         .sessionManagement(sessionManagementConfigurer
@@ -38,12 +38,16 @@ public class WebSecurityConfig {
         .authorizeHttpRequests(registry -> registry
             .requestMatchers("/").permitAll()
             .requestMatchers("/api/v1/films/").permitAll()
+            .requestMatchers("/api/v1/films/**").permitAll()
+            .requestMatchers("/api/v1/films/onlyFilms").permitAll()
+            .requestMatchers("/api/v1/films/onlySeries").permitAll()
             .requestMatchers("/api/v1/films/search/**").permitAll()
             .requestMatchers("/hello").permitAll()
             .requestMatchers("/login").permitAll()
             .requestMatchers("/register").permitAll()
             .requestMatchers("/error").permitAll()
             .requestMatchers("/api/v1/films/latest").permitAll()
+            .requestMatchers("/refresh").permitAll()
             .requestMatchers("/admin/**").hasRole("ADMIN")
             .anyRequest().authenticated())
         .httpBasic(Customizer.withDefaults());
@@ -52,12 +56,21 @@ public class WebSecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
-    configuration.setAllowedOrigins(List.of("*")); // Разрешить запросы от всех источников
-    configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Разрешить основные HTTP-методы
-    configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type", "X-Requested-With", "accept", "Origin", "Access-Control-Request-Method", "Access-Control-Request-Headers")); // Разрешить определенные заголовки
+    configuration.setAllowedOrigins(List.of(
+        "https://onlyjar-production.up.railway.app",
+        "http://localhost:3000",
+        "http://localhost:8080"
+    ));
+    configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+    configuration.setAllowedHeaders(List.of("*"));
+    configuration.setExposedHeaders(List.of("Authorization", "Set-Cookie"));
+    configuration.setAllowCredentials(true);
+    configuration.setMaxAge(3600L);
+
     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
     source.registerCorsConfiguration("/**", configuration);
     return source;
+
   }
 }
 

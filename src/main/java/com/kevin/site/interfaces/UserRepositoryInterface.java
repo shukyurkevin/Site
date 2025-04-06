@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UserRepositoryInterface extends CrudRepository<UserEntity,Long> {
   List<UserEntity> findByUsernameIgnoreCase(String username);
+  boolean existsByUsernameOrEmail(String username, String email);
 
   default boolean deleteUserById(Long id) {
     if (existsById(id)) {
@@ -19,5 +20,6 @@ public interface UserRepositoryInterface extends CrudRepository<UserEntity,Long>
   boolean existsByUsername(String username);
   boolean existsByEmail(String email);
   UserEntity findByUsername(String username);
+  UserEntity findByEmail(String email);
 
 }

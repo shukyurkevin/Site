@@ -53,6 +53,14 @@ public class FilmDataServiceRepository implements FilmDataAccessInterface<FilmMo
 
     return films;
   }
+  @Override
+  public List<FilmModel> searchByGenres(String searchTerm) {
+    List<FilmEntity> filmEntities = filmRepositoryInterface.findByGenresContainingIgnoreCase(searchTerm);
+    List<FilmModel> films = new ArrayList<>();
+    filmEntities.forEach(film->films.add(modelMapper.map(film,FilmModel.class)));
+
+    return films;
+  }
 
   @Override
   public Long addOne(FilmModel newFilm) {
@@ -82,4 +90,19 @@ public class FilmDataServiceRepository implements FilmDataAccessInterface<FilmMo
     return films;
   }
 
+  @Override
+  public List<FilmModel> getSeries(){
+    List<FilmEntity> filmEntities = filmRepositoryInterface.findByTypeContainingIgnoreCase("Series");
+    List<FilmModel> series = new ArrayList<>();
+    filmEntities.forEach(film->series.add(modelMapper.map(film,FilmModel.class)));
+    return series;
+  }
+
+  @Override
+  public List<FilmModel> getOnlyFilms(){
+    List<FilmEntity> filmEntities = filmRepositoryInterface.findByTypeContainingIgnoreCase("Movies");
+    List<FilmModel> series = new ArrayList<>();
+    filmEntities.forEach(film->series.add(modelMapper.map(film,FilmModel.class)));
+    return series;
+  }
 }

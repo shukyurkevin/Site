@@ -10,9 +10,12 @@ public interface FilmServiceInterface {
 
   public List<FilmModel> getFilms();
   public List<FilmModel> searchFilms(String searchTerm);
+  public List<FilmModel> searchByGenres(String searchTerm);
   public Long addOne(FilmModel newFilm);
   public boolean deleteOne(Long id);
   public FilmModel updateOne(Long id, FilmModel newOrder);
   public FilmModel getById(Long id);
   public List<FilmModel> getLatestFilms();
+  public List<FilmModel> getSeries();
+  public List<FilmModel> getOnlyFilms();
 }

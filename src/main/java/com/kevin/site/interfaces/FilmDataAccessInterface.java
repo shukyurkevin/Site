@@ -7,9 +7,12 @@ public interface FilmDataAccessInterface <T> {
   public T getById(Long id);
   public List<T> getFilms();
   public List<T> searchFilms(String searchTerm);
+  public List<T> searchByGenres(String searchTerm);
   public Long addOne(T newOrder);
   public boolean deleteOne(Long id);
   public T updateOne(Long id, T filmModel);
   public List<FilmModel> getLatestFilms();
+  public List<FilmModel> getSeries();
+  public List<FilmModel> getOnlyFilms();
 
 }

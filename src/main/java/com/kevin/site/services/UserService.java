@@ -48,9 +48,15 @@ public class UserService{
   public boolean existsByEmail(String email){
    return userDao.existByEmail(email);
   }
+  public boolean existsByUsernameOrEmail(String username, String email){
+    return userDao.existByNameOrEmail(username,email);
+  }
 
   public UserModel findByUsername(String username) {
    return userDao.findByUsername(username);
+  }
+  public UserModel findByEmail(String email) {
+    return userDao.findByEmail(email);
   }
 
   public List<FilmModel> getAllFavorites(Long userId){
@@ -93,6 +99,7 @@ public class UserService{
       throws Exception {
    userDao.updateWatchProgress(userId,watchProgress);
   }
+
   public List<Map<String, Object>> getWatchProgress(Long userId) throws Exception{
    return userDao.getWatchProgress(userId);
   }

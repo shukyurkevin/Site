@@ -24,20 +24,23 @@ public class AuthService {
   private final PasswordEncoder passwordEncoder;
   private final JwtIssuer jwtIssuer;
   ModelMapper modelMapper = new ModelMapper();
-  public String auth(UserLoginDTO userDto){
+  public String auth(UserLoginDTO userDto) {
 
-    if (!userService.existsByUsername(userDto.getUsername())) {
-      return null;
-    }
     UserModel user = userService.findByUsername(userDto.getUsername());
 
-    var token = jwtIssuer.issue(user.getUserId(),user.getUsername(), List.of(user.getRoles()));
+    if (user == null) {
+      user = userService.findByEmail(userDto.getUsername());
+    }
 
+    if (user == null) {
+      return "Wrong username or email";
+    }
 
     if (!passwordEncoder.matches(userDto.getPassword(), user.getPassword())) {
       return "Wrong password";
     }
 
+    var token = jwtIssuer.issueAccessToken(user.getUserId(),user.getUsername(), List.of(user.getRoles()));
 
     return token;
   }
@@ -60,4 +63,6 @@ public class AuthService {
 
     return ResponseEntity.ok("User registered successfully!");
   }
+
+
 }

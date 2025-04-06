@@ -9,6 +9,7 @@ import org.springframework.data.repository.CrudRepository;
 public interface FilmRepositoryInterface extends CrudRepository<FilmEntity, Long> {
 
   List<FilmEntity> findByTitleContainingIgnoreCase(String title);
+  List<FilmEntity> findByGenresContainingIgnoreCase(String genres);
   Long save(FilmModel newFilm);
   default boolean deleteFilmById(Long id) {
     if (existsById(id)) {
@@ -18,5 +19,6 @@ public interface FilmRepositoryInterface extends CrudRepository<FilmEntity, Long
     return false;
   }
   List<FilmEntity> findTop6ByOrderByIdDesc();
+  List<FilmEntity> findByTypeContainingIgnoreCase(String type);
 
 }

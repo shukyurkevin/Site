@@ -112,16 +112,27 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
  public boolean existById(Long id){
     return userRepositoryInterface.existsById(id);
  }
+  public boolean existByNameOrEmail(String username,String email){
+    return userRepositoryInterface.existsByUsernameOrEmail(username,email);
+  }
  public boolean existByEmail(String email){
     return userRepositoryInterface.existsByEmail(email);
  }
  public UserModel findByUsername(String username){
-    UserModel result = modelMapper.map(userRepositoryInterface.findByUsername(username),UserModel.class);
+   UserEntity result = userRepositoryInterface.findByUsername(username);
+
    if (result == null) {
      return null;
    }
-    return result;
+    return modelMapper.map(result,UserModel.class);
  }
+  public UserModel findByEmail(String email){
+    UserEntity result = userRepositoryInterface.findByEmail(email);
+    if (result == null) {
+      return null;
+    }
+    return modelMapper.map(result,UserModel.class);
+  }
   @Transactional
  public void addToFavorite(Long userId, Long filmId){
     if (userFavoriteFilmsRepository.findByUserIdAndFilmId(userId,filmId) != null){
@@ -292,6 +303,7 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
 
     return objectMapper.readValue(user.getWatchProgress(), new TypeReference<List<Map<String, Object>>>() {});
   }
+
 
 
 }
