@@ -76,4 +76,10 @@ public class UserRestController {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error retrieving progress");
     }
   }
+  @PutMapping("/update")
+  public UserModel updateUser(@RequestBody UserModel model,
+                              @AuthenticationPrincipal UserPrincipal userPrincipal) {
+    Long userId = userPrincipal.getId();
+    return userService.updateUser(userId, model);
+  }
 }

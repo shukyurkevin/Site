@@ -28,6 +28,46 @@ public class UserModel {
 
   private String watchProgress;
 
+  private String subscription = "free";
+
+  private String reSub;
+
+  private String pfpUrl = "https://devforum-uploads.s3.dualstack.us-east-2.amazonaws.com/uploads/original/4X/f/3/b/f3b335663c34170e3c64a8ff4ea692cb877ff832.jpeg";
+
+  private String phoneNumber;
+
+  public String getSubscription() {
+    return subscription;
+  }
+
+  public void setSubscription(String subscription) {
+    this.subscription = subscription;
+  }
+
+  public String getReSub() {
+    return reSub;
+  }
+
+  public void setReSub(String reSub) {
+    this.reSub = reSub;
+  }
+
+  public String getPfpUrl() {
+    return pfpUrl;
+  }
+
+  public void setPfpUrl(String pfpUrl) {
+    this.pfpUrl = pfpUrl;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
   public String getWatchProgress() {
     return watchProgress;
   }

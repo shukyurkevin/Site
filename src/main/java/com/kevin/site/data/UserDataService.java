@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -94,13 +95,45 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
   @Override
   public UserModel updateOne(Long id, UserModel userModel) {
     UserEntity existingUser = userRepositoryInterface.findById(id)
-        .orElse(null);
-    if (existingUser == null)return null;
+        .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
-    existingUser.setUsername(userModel.getUsername());
-    existingUser.setPassword(userModel.getPassword());
-    existingUser.setEmail(userModel.getEmail());
-    existingUser.setRoles(userModel.getRoles());
+    if (userModel.getUsername() != null && !userModel.getUsername().isBlank()) {
+      existingUser.setUsername(userModel.getUsername());
+    }
+
+    if (userModel.getPassword() != null && !userModel.getPassword().isBlank()) {
+
+      existingUser.setPassword(userModel.getPassword());
+    }
+
+    if (userModel.getEmail() != null && !userModel.getEmail().isBlank()) {
+      existingUser.setEmail(userModel.getEmail());
+    }
+
+    if (userModel.getRoles() != null) {
+      existingUser.setRoles(userModel.getRoles());
+    }
+
+    if (userModel.getPfpUrl() != null && !userModel.getPfpUrl().isBlank()) {
+      existingUser.setPfpUrl(userModel.getPfpUrl());
+    }
+
+    if (userModel.getPhoneNumber() != null && !userModel.getPhoneNumber().isBlank()) {
+      existingUser.setPhoneNumber(userModel.getPhoneNumber());
+    }
+
+    if (userModel.getReSub() != null && !userModel.getReSub().isBlank()) {
+      existingUser.setReSub(userModel.getReSub());
+    }
+
+    if (userModel.getWatchProgress() != null) {
+      existingUser.setWatchProgress(userModel.getWatchProgress());
+    }
+
+    if (userModel.getSubscription() != null && !userModel.getSubscription().isBlank()) {
+      existingUser.setSubscription(userModel.getSubscription());
+    }
+
 
     UserEntity updatedUser = userRepositoryInterface.save(existingUser);
 

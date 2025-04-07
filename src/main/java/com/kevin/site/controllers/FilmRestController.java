@@ -68,7 +68,7 @@ public class FilmRestController {
   }
 
   @PutMapping("/update/{id}")
-  public FilmModel addFilm(@RequestBody FilmModel model, @PathVariable(name = "id") Long x){
+  public FilmModel updateFilm(@RequestBody FilmModel model, @PathVariable(name = "id") Long x){
 
     return filmService.updateOne(x,model);
   }

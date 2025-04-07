@@ -28,18 +28,67 @@ public class UserEntity {
 
   @Column("Roles")
   private String roles;
-  public UserEntity(){
 
-  }
   @Column("watch_progress")
   private String watchProgress;
 
+  @Column("pfp_Url")
+  private String pfpUrl;
+
+  @Column("re_sub")
+  private String reSub;
+
+  @Column("phone_number")
+  private String phoneNumber;
+
+  @Column("subscription")
+  private String subscription;
+
+
+
+
+  public UserEntity(){
+
+  }
   public String getWatchProgress() {
     return watchProgress;
   }
 
   public void setWatchProgress(String watchProgress) {
     this.watchProgress = watchProgress;
+  }
+
+
+  public String getPfpUrl() {
+    return pfpUrl;
+  }
+
+  public void setPfpUrl(String pfpUrl) {
+    this.pfpUrl = pfpUrl;
+  }
+
+  public String getReSub() {
+    return reSub;
+  }
+
+  public void setReSub(String reSub) {
+    this.reSub = reSub;
+  }
+
+  public String getPhoneNumber() {
+    return phoneNumber;
+  }
+
+  public void setPhoneNumber(String phoneNumber) {
+    this.phoneNumber = phoneNumber;
+  }
+
+  public String getSubscription() {
+    return subscription;
+  }
+
+  public void setSubscription(String subscription) {
+    this.subscription = subscription;
   }
 
   public String getRoles() {
