@@ -1,5 +1,16 @@
 #mysql connection from mamp
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   application:
     name: validation
   datasource:
@@ -10,4 +21,5 @@ spring:
 security:
   jwt:
     secret-key: goodsecret
+
 

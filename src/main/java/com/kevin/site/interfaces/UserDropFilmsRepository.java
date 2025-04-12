@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public interface UserDropFilmsRepository extends CrudRepository<UserDropFilm,Long> {
   UserDropFilm findByUserIdAndFilmId(Long UserId,Long FilmId);
+
   @Query("SELECT film_id FROM user_drop_films WHERE user_id = :userId")
   List<Long> findAllFilmIdsByUserId(Long userId);
-
 }

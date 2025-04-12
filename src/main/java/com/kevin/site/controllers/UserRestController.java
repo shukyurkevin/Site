@@ -82,4 +82,9 @@ public class UserRestController {
     Long userId = userPrincipal.getId();
     return userService.updateUser(userId, model);
   }
+  @GetMapping("/profile")
+  public UserModel userProfile(@AuthenticationPrincipal UserPrincipal userPrincipal){
+    Long userId = userPrincipal.getId();
+    return userService.getUserById(userId);
+  }
 }

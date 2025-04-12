@@ -36,8 +36,17 @@ public class UserModel {
 
   private String phoneNumber;
 
+  private String subscriptionEndDate;
   public String getSubscription() {
     return subscription;
+  }
+
+  public String getSubscriptionEndDate() {
+    return subscriptionEndDate;
+  }
+
+  public void setSubscriptionEndDate(String subscriptionEndDate) {
+    this.subscriptionEndDate = subscriptionEndDate;
   }
 
   public void setSubscription(String subscription) {

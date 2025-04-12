@@ -23,6 +23,7 @@ public class AuthService {
   private final UserService userService;
   private final PasswordEncoder passwordEncoder;
   private final JwtIssuer jwtIssuer;
+  private final EmailService emailService;
   ModelMapper modelMapper = new ModelMapper();
   public String auth(UserLoginDTO userDto) {
 
@@ -60,6 +61,9 @@ public class AuthService {
     user.setRoles("ROLE_USER");
     UserModel userModel = modelMapper.map(user, UserModel.class);
     userService.createUser(userModel);
+
+    emailService.sendEmail(userDto.getEmail(),"Welcome to Cine-X","Hello "+userDto.getUsername()
+        +" ! Welcome to Cine-X");
 
     return ResponseEntity.ok("User registered successfully!");
   }

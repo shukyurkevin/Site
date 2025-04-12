@@ -4,19 +4,16 @@ import com.kevin.site.dto.UserLoginDTO;
 import com.kevin.site.dto.UserRegistrationDTO;
 import com.kevin.site.entity.RefreshToken;
 import com.kevin.site.entity.UserEntity;
-import com.kevin.site.interfaces.RefreshTokenRepository;
 import com.kevin.site.interfaces.UserRepositoryInterface;
 import com.kevin.site.security.JwtIssuer;
 import com.kevin.site.security.UserPrincipal;
 import com.kevin.site.services.AuthService;
+import com.kevin.site.services.EmailService;
 import com.kevin.site.services.RefreshTokenService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.Duration;
-import java.time.Instant;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
@@ -27,7 +24,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true")
@@ -37,15 +33,13 @@ public class AuthRestController {
   private final RefreshTokenService refreshTokenService;
   private final JwtIssuer jwtIssuer;
   private final UserRepositoryInterface userRepository;
-  private final RefreshTokenRepository refreshTokenRepository;
 
-  public AuthRestController(AuthService authService, RefreshTokenService refreshTokenService, JwtIssuer jwtIssuer, UserRepositoryInterface userRepository,
-                            RefreshTokenRepository refreshTokenRepository) {
+  public AuthRestController(AuthService authService, RefreshTokenService refreshTokenService, JwtIssuer jwtIssuer
+      , UserRepositoryInterface userRepository){
     this.authService = authService;
     this.refreshTokenService = refreshTokenService;
     this.jwtIssuer = jwtIssuer;
     this.userRepository = userRepository;
-    this.refreshTokenRepository = refreshTokenRepository;
   }
 
 
@@ -106,7 +100,27 @@ public class AuthRestController {
         .body(Map.of("Rejected", token));
     }
 
-    RefreshToken refreshToken = refreshTokenService.createRefreshToken(user.getId());
+    RefreshToken refreshToken;
+    if (!userDto.isRememberMe()){
+      refreshToken = refreshTokenService.createBadRefreshToken(user.getId());
+
+      ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken.getToken())
+          .httpOnly(true)
+          .sameSite("None")
+          .secure(true)
+          .path("/")
+          .maxAge(Duration.ofDays(1))
+          .build();
+
+      return ResponseEntity.ok()
+          .header(HttpHeaders.SET_COOKIE, cookie.toString())
+          .body(Map.of("accessToken", token));
+
+
+    }else {
+      refreshToken = refreshTokenService.createRefreshToken(user.getId());
+    }
+    System.out.println(refreshToken.getExpiryDate());
 
     ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken.getToken())
         .httpOnly(true)
@@ -123,13 +137,21 @@ public class AuthRestController {
   }
 
   @PostMapping("/notIn")
-  public ResponseEntity<Map<String, String>> logoutUser(HttpServletResponse response) {
+  public ResponseEntity<Map<String, String>> logoutUser(
+      @CookieValue(name = "refreshToken", required = false) String refreshToken,
+      HttpServletResponse response) {
+
+    if (refreshToken != null){
+      System.out.println(refreshToken);
+      refreshTokenService.deleteByToken(refreshToken);
+    }
+
     ResponseCookie deleteCookie = ResponseCookie.from("refreshToken", "")
         .httpOnly(true)
         .sameSite("None")
         .secure(true)
         .path("/")
-        .maxAge(0) // Устанавливаем maxAge = 0 для удаления
+        .maxAge(0)
         .build();
 
     response.addHeader(HttpHeaders.SET_COOKIE, deleteCookie.toString());

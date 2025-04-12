@@ -44,12 +44,23 @@ public class UserEntity {
   @Column("subscription")
   private String subscription;
 
+  @Column("subscription_end_date")
+  private String subscriptionEndDate;
 
 
 
   public UserEntity(){
 
   }
+
+  public String getSubscriptionEndDate() {
+    return subscriptionEndDate;
+  }
+
+  public void setSubscriptionEndDate(String subscriptionEndDate) {
+    this.subscriptionEndDate = subscriptionEndDate;
+  }
+
   public String getWatchProgress() {
     return watchProgress;
   }

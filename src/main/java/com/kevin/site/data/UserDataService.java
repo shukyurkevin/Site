@@ -129,6 +129,9 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
     if (userModel.getWatchProgress() != null) {
       existingUser.setWatchProgress(userModel.getWatchProgress());
     }
+    if (userModel.getSubscriptionEndDate() != null && !userModel.getSubscriptionEndDate().isBlank()) {
+      existingUser.setSubscriptionEndDate(userModel.getSubscriptionEndDate());
+    }
 
     if (userModel.getSubscription() != null && !userModel.getSubscription().isBlank()) {
       existingUser.setSubscription(userModel.getSubscription());
