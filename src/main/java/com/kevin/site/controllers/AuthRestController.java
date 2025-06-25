@@ -77,8 +77,35 @@ public class AuthRestController {
     return ResponseEntity.ok().body(htmlResponse);
   }
   @PostMapping("/register")
-  public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDTO userDto) {
-    return authService.registerUser(userDto);
+  public ResponseEntity<Map<String,String>> registerUser(@RequestBody UserRegistrationDTO userDto) {
+    String result = authService.registerUser(userDto);
+
+    if (result.equalsIgnoreCase("User registered successfully!"))
+    {
+
+      UserLoginDTO autologin =
+          UserLoginDTO.builder().username(userDto.getUsername()).password(userDto.getPassword())
+              .build();
+      String token = authService.auth(autologin);
+      UserEntity user = userRepository.findByUsername(autologin.getUsername());
+      RefreshToken refreshToken;
+      refreshToken = refreshTokenService.createBadRefreshToken(user.getId());
+
+      ResponseCookie cookie = ResponseCookie.from("refreshToken", refreshToken.getToken())
+          .httpOnly(true)
+          .sameSite("None")
+          .secure(true)
+          .path("/")
+          .maxAge(Duration.ofDays(1))
+          .build();
+      return ResponseEntity.ok()
+          .header(HttpHeaders.SET_COOKIE, cookie.toString())
+          .body(Map.of(
+              "accessToken", token,
+              "message", "User registered successfully!"));
+    }else{
+      return ResponseEntity.status(409).body(Map.of("error", result));
+    }
   }
 
   @PostMapping("/login")
@@ -89,15 +116,15 @@ public class AuthRestController {
     if (token == null) {
       return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(null);
     }
-    if (token.equalsIgnoreCase("Wrong password")){return ResponseEntity.ok()
-        .body(Map.of("Rejected", token));
+    if (token.equalsIgnoreCase("Wrong password")){return ResponseEntity.status(409)
+        .body(Map.of("error", token));
     }
     UserEntity user = userRepository.findByUsername((userDto.getUsername()));
     if (user == null){
       user = userRepository.findByEmail(userDto.getUsername());
     }
-    if (token.equalsIgnoreCase("Wrong username or email")){return ResponseEntity.ok()
-        .body(Map.of("Rejected", token));
+    if (token.equalsIgnoreCase("Wrong username or email")){return ResponseEntity.status(409)
+        .body(Map.of("error", token));
     }
 
     RefreshToken refreshToken;

@@ -10,6 +10,8 @@ public interface FilmRepositoryInterface extends CrudRepository<FilmEntity, Long
 
   List<FilmEntity> findByTitleContainingIgnoreCase(String title);
   List<FilmEntity> findByGenresContainingIgnoreCase(String genres);
+
+  List<FilmEntity> findByTypeContainingIgnoreCaseAndGenresContainingIgnoreCase(String type, String genres);
   Long save(FilmModel newFilm);
   default boolean deleteFilmById(Long id) {
     if (existsById(id)) {

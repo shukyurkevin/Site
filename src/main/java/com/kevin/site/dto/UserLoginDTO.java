@@ -1,5 +1,8 @@
 package com.kevin.site.dto;
 
+import lombok.Builder;
+
+@Builder
 public class UserLoginDTO {
   private Long id;
   private String username;

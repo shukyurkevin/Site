@@ -45,13 +45,13 @@ public class AuthService {
 
     return token;
   }
-  public ResponseEntity<?> registerUser(@RequestBody UserRegistrationDTO userDto) {
+  public String registerUser(@RequestBody UserRegistrationDTO userDto) {
     if (userService.existsByUsername(userDto.getUsername())) {
-      return ResponseEntity.badRequest().body("Username is already taken!");
+      return "Username is already taken!";
     }
 
     if (userService.existsByEmail(userDto.getEmail())) {
-      return ResponseEntity.badRequest().body("Email is already taken!");
+      return "Email is already taken!";
     }
 
     UserEntity user = new UserEntity();
@@ -65,7 +65,7 @@ public class AuthService {
     emailService.sendEmail(userDto.getEmail(),"Welcome to Cine-X","Hello "+userDto.getUsername()
         +" ! Welcome to Cine-X");
 
-    return ResponseEntity.ok("User registered successfully!");
+    return"User registered successfully!";
   }
 
 

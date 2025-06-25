@@ -1,5 +1,7 @@
 package com.kevin.site.controllers;
 
+import com.kevin.site.dto.GenreFilmsDto;
+import com.kevin.site.dto.GenreSeriesDto;
 import com.kevin.site.models.FilmModel;
 import com.kevin.site.services.FilmServiceInterface;
 import java.util.ArrayList;
@@ -85,4 +87,25 @@ public class FilmRestController {
     return filmService.getSeries();
   }
 
+  @GetMapping("/onlyFilms/mainGenres")
+  public List<GenreFilmsDto> getFilmsByGenres(){
+    return filmService.getFilmsByGenres();
+  }
+  @GetMapping("/onlySeries/mainGenres")
+  public List<GenreSeriesDto> getSeriesByGenres(){
+    return filmService.getSeriesByGenres();
+  }
+
+  @GetMapping("/highestRated")
+  public List<FilmModel> getHighestRatedMedia(){
+    return filmService.getHighestRated();
+  }
+  @GetMapping("/onlyFilms/highestRated")
+  public List<FilmModel> getHighestRatedMovies() {
+    return filmService.getHighestRatedMovies();
+  }
+  @GetMapping("/onlySeries/highestRated")
+  public List<FilmModel> getHighestRatedSeries() {
+    return filmService.getHighestRatedSeries();
+  }
 }

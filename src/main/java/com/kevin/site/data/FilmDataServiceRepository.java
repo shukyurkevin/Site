@@ -1,10 +1,13 @@
 package com.kevin.site.data;
 
+import com.kevin.site.dto.GenreFilmsDto;
+import com.kevin.site.dto.GenreSeriesDto;
 import com.kevin.site.entity.FilmEntity;
 import com.kevin.site.models.FilmModel;
 import com.kevin.site.interfaces.FilmDataAccessInterface;
 import com.kevin.site.interfaces.FilmRepositoryInterface;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +19,7 @@ public class FilmDataServiceRepository implements FilmDataAccessInterface<FilmMo
   final
   FilmRepositoryInterface filmRepositoryInterface;
 
+  private final List<String> genres = List.of("Drama", "Action", "Thriller", "Horror", "Comedy", "Sci-Fi", "Fantasy", "Crime");
   ModelMapper modelMapper = new ModelMapper();
 
   @Autowired
@@ -105,4 +109,61 @@ public class FilmDataServiceRepository implements FilmDataAccessInterface<FilmMo
     filmEntities.forEach(film->series.add(modelMapper.map(film,FilmModel.class)));
     return series;
   }
+
+  @Override
+  public List<GenreFilmsDto> getFilmsByGenres() {
+    List<GenreFilmsDto> result = new ArrayList<>();
+
+    for (String genre : genres){
+      List<FilmEntity> films = filmRepositoryInterface.findByTypeContainingIgnoreCaseAndGenresContainingIgnoreCase("Movies",genre);
+      result.add(new GenreFilmsDto(genre,films));
+    }
+
+    return result;
+  }
+
+  @Override
+  public List<GenreSeriesDto> getSeriesByGenres() {
+    List<GenreSeriesDto> result = new ArrayList<>();
+
+    for (String genre : genres){
+      List<FilmEntity> films = filmRepositoryInterface.findByTypeContainingIgnoreCaseAndGenresContainingIgnoreCase("Series",genre);
+      result.add(new GenreSeriesDto(genre,films));
+    }
+
+    return result;
+  }
+
+  @Override
+  public List<FilmModel> getHighestRated() {
+    List<FilmEntity> allFilms = (List<FilmEntity>) filmRepositoryInterface.findAll();
+    List<FilmEntity> sortedList = allFilms.stream()
+        .sorted(Comparator.comparing(FilmEntity::getRating).reversed())
+        .toList();
+    List<FilmModel> sortedFilms = new ArrayList<>();
+    sortedList.forEach(film->sortedFilms.add(modelMapper.map(film,FilmModel.class)));
+    return sortedFilms;
+  }
+
+  @Override
+  public List<FilmModel> getHighestRatedMovies() {
+    List<FilmEntity> allFilms = (List<FilmEntity>) filmRepositoryInterface.findByTypeContainingIgnoreCase("Movies");
+    List<FilmEntity> sortedList = allFilms.stream()
+        .sorted(Comparator.comparing(FilmEntity::getRating).reversed())
+        .toList();
+    List<FilmModel> sortedFilms = new ArrayList<>();
+    sortedList.forEach(film->sortedFilms.add(modelMapper.map(film,FilmModel.class)));
+    return sortedFilms;
+  }
+  @Override
+  public List<FilmModel> getHighestRatedSeries() {
+    List<FilmEntity> allFilms = (List<FilmEntity>) filmRepositoryInterface.findByTypeContainingIgnoreCase("Series");
+    List<FilmEntity> sortedList = allFilms.stream()
+        .sorted(Comparator.comparing(FilmEntity::getRating).reversed())
+        .toList();
+    List<FilmModel> sortedFilms = new ArrayList<>();
+    sortedList.forEach(film->sortedFilms.add(modelMapper.map(film,FilmModel.class)));
+    return sortedFilms;
+  }
 }
+

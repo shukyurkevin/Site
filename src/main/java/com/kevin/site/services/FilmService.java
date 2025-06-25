@@ -1,5 +1,7 @@
 package com.kevin.site.services;
 
+import com.kevin.site.dto.GenreFilmsDto;
+import com.kevin.site.dto.GenreSeriesDto;
 import com.kevin.site.interfaces.FilmDataAccessInterface;
 import com.kevin.site.models.FilmModel;
 import java.util.List;
@@ -82,4 +84,31 @@ public class FilmService implements FilmServiceInterface {
   public List<FilmModel> getOnlyFilms(){
     return filmDAO.getOnlyFilms();
   }
+
+  @Override
+  public List<GenreFilmsDto> getFilmsByGenres(){
+    return filmDAO.getFilmsByGenres();
+  }
+
+  @Override
+  public List<GenreSeriesDto> getSeriesByGenres() {
+    return filmDAO.getSeriesByGenres();
+  }
+
+  @Override
+  public List<FilmModel> getHighestRated() {
+
+    return filmDAO.getHighestRated();
+  }
+
+  @Override
+  public List<FilmModel> getHighestRatedMovies() {
+    return filmDAO.getHighestRatedMovies();
+  }
+
+  @Override
+  public List<FilmModel> getHighestRatedSeries() {
+    return filmDAO.getHighestRatedSeries();
+  }
+
 }
