@@ -1,112 +1,120 @@
 package com.kevin.site.services;
 
+import com.kevin.site.data.FilmDataServiceRepository;
 import com.kevin.site.dto.GenreFilmsDto;
 import com.kevin.site.dto.GenreSeriesDto;
-import com.kevin.site.interfaces.FilmDataAccessInterface;
 import com.kevin.site.models.FilmModel;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 @Service
-public class FilmService implements FilmServiceInterface {
+public class FilmServiceImp {
   final
-  FilmDataAccessInterface<FilmModel> filmDAO;
+  FilmDataServiceRepository filmDAO;
   @Autowired
-  public FilmService(FilmDataAccessInterface<FilmModel> filmDAO) {
+  public FilmServiceImp(FilmDataServiceRepository filmDAO) {
     this.filmDAO = filmDAO;
   }
 
 
-  @Override
+
   public void test() {
     System.out.println("Film Service is working");
   }
 
-  @Override
+
   public void init() {
     System.out.println("init filmService");
   }
 
-  @Override
+
   public void destroy() {
     System.out.println("destroy filmService");
 
   }
 
-  @Override
+
   public List<FilmModel> getFilms() {
 
     return filmDAO.getFilms();
 
   }
 
-  @Override
+
   public List<FilmModel> searchFilms(String searchTerm) {
     return filmDAO.searchFilms(searchTerm);
   }
-  @Override
+
   public List<FilmModel> searchByGenres(String searchTerm){
     return filmDAO.searchByGenres(searchTerm);
   }
-  @Override
+
   public Long addOne(FilmModel newFilm) {
 
     return filmDAO.addOne(newFilm);
   }
 
-  @Override
+
   public boolean deleteOne(Long id) {
 
     return filmDAO.deleteOne(id);
   }
 
-  @Override
+
   public FilmModel updateOne(Long idToUpdate, FilmModel newOrder) {
 
     return filmDAO.updateOne(idToUpdate,newOrder);
   }
 
-  @Override
+
   public FilmModel getById(Long id) {
 
     return filmDAO.getById(id);
   }
-  @Override
+
   public List<FilmModel> getLatestFilms() {
     return filmDAO.getLatestFilms();
   }
 
-  @Override
+  public List<FilmModel> getLatestOnlyFilms() {
+    return filmDAO.getLatestOnlyFilms();
+  }
+
+  public List<FilmModel> getLatestOnlySeries() {
+    return filmDAO.getLatestOnlySeries();
+  }
+
+
   public List<FilmModel> getSeries(){
     return filmDAO.getSeries();
   }
-  @Override
+
   public List<FilmModel> getOnlyFilms(){
     return filmDAO.getOnlyFilms();
   }
 
-  @Override
+
   public List<GenreFilmsDto> getFilmsByGenres(){
     return filmDAO.getFilmsByGenres();
   }
 
-  @Override
+
   public List<GenreSeriesDto> getSeriesByGenres() {
     return filmDAO.getSeriesByGenres();
   }
 
-  @Override
+
   public List<FilmModel> getHighestRated() {
 
     return filmDAO.getHighestRated();
   }
 
-  @Override
+
   public List<FilmModel> getHighestRatedMovies() {
     return filmDAO.getHighestRatedMovies();
   }
 
-  @Override
+
   public List<FilmModel> getHighestRatedSeries() {
     return filmDAO.getHighestRatedSeries();
   }

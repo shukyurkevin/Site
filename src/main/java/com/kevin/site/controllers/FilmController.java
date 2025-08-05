@@ -1,7 +1,7 @@
 package com.kevin.site.controllers;
 
 import com.kevin.site.models.FilmModel;
-import com.kevin.site.services.FilmServiceInterface;
+import com.kevin.site.services.FilmServiceImp;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/films")
 public class FilmController {
-  FilmServiceInterface filmService;
+  FilmServiceImp filmService;
 
   @Autowired
-  public FilmController(FilmServiceInterface filmService) {
+  public FilmController(FilmServiceImp filmService) {
     this.filmService = filmService;
   }
 

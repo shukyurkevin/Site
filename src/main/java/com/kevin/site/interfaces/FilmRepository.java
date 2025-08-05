@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.data.repository.CrudRepository;
 
 
-public interface FilmRepositoryInterface extends CrudRepository<FilmEntity, Long> {
+public interface FilmRepository extends CrudRepository<FilmEntity, Long> {
 
   List<FilmEntity> findByTitleContainingIgnoreCase(String title);
   List<FilmEntity> findByGenresContainingIgnoreCase(String genres);
@@ -20,7 +20,7 @@ public interface FilmRepositoryInterface extends CrudRepository<FilmEntity, Long
     }
     return false;
   }
-  List<FilmEntity> findTop6ByOrderByIdDesc();
+  List<FilmEntity> findAllByOrderByIdDesc();
   List<FilmEntity> findByTypeContainingIgnoreCase(String type);
 
 }

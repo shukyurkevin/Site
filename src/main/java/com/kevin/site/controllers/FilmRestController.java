@@ -3,7 +3,7 @@ package com.kevin.site.controllers;
 import com.kevin.site.dto.GenreFilmsDto;
 import com.kevin.site.dto.GenreSeriesDto;
 import com.kevin.site.models.FilmModel;
-import com.kevin.site.services.FilmServiceInterface;
+import com.kevin.site.services.FilmServiceImp;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,10 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping("/api/v1/films")
 public class FilmRestController {
-  FilmServiceInterface filmService;
+  FilmServiceImp filmService;
 
   @Autowired
-  public FilmRestController(FilmServiceInterface filmService) {
+  public FilmRestController(FilmServiceImp filmService) {
     super();
     this.filmService = filmService;
   }
@@ -82,9 +82,18 @@ public class FilmRestController {
   public List<FilmModel> getOnlyFilms(){
     return filmService.getOnlyFilms();
   }
+  @GetMapping("/onlyFilms/latest")
+  public List<FilmModel> getOnlyLatestFilms(){
+    return filmService.getLatestOnlyFilms();
+  }
   @GetMapping("/onlySeries")
   public List<FilmModel> getSeries(){
     return filmService.getSeries();
+  }
+
+  @GetMapping("/onlySeries/latest")
+  public List<FilmModel> getOnlyLatestSeries(){
+    return filmService.getLatestOnlySeries();
   }
 
   @GetMapping("/onlyFilms/mainGenres")

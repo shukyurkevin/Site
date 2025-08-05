@@ -1,4 +1,4 @@
-package com.kevin.site.security;
+package com.kevin.site.security.jwt;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;

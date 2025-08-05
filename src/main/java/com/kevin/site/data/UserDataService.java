@@ -9,15 +9,14 @@ import com.kevin.site.entity.UserEntity;
 import com.kevin.site.entity.UserFavoriteFilm;
 import com.kevin.site.entity.UserOnWatchFilm;
 import com.kevin.site.entity.UserToWatchFilm;
-import com.kevin.site.interfaces.FilmRepositoryInterface;
+import com.kevin.site.interfaces.FilmRepository;
 import com.kevin.site.interfaces.UserDropFilmsRepository;
 import com.kevin.site.interfaces.UserFavoriteFilmsRepository;
 import com.kevin.site.interfaces.UserOnWatchFilmsRepository;
 import com.kevin.site.interfaces.UserToWatchFilmsRepository;
 import com.kevin.site.models.FilmModel;
 import com.kevin.site.models.UserModel;
-import com.kevin.site.interfaces.UserDataAccessInterface;
-import com.kevin.site.interfaces.UserRepositoryInterface;
+import com.kevin.site.interfaces.UserRepository;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,9 +27,9 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class UserDataService implements UserDataAccessInterface<UserModel> {
+public class UserDataService {
   final
-  UserRepositoryInterface userRepositoryInterface;
+  UserRepository userRepository;
   final
   UserFavoriteFilmsRepository userFavoriteFilmsRepository;
   final
@@ -39,62 +38,62 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
   UserToWatchFilmsRepository userToWatchFilmsRepository;
   final UserDropFilmsRepository userDropFilmsRepository;
   final
-  FilmRepositoryInterface filmRepositoryInterface;
+  FilmRepository filmRepository;
   @Autowired
   private ObjectMapper objectMapper;
   ModelMapper modelMapper = new ModelMapper();
   @Autowired
-  public UserDataService(UserRepositoryInterface userRepositoryInterface,
+  public UserDataService(UserRepository userRepository,
                          UserFavoriteFilmsRepository userFavoriteFilmsRepository,
                          UserOnWatchFilmsRepository userOnWatchFilmsRepository,
                          UserToWatchFilmsRepository userToWatchFilmsRepository,
                          UserDropFilmsRepository userDropFilmsRepository,
-                         FilmRepositoryInterface filmRepositoryInterface) {
-    this.userRepositoryInterface = userRepositoryInterface;
+                         FilmRepository filmRepository) {
+    this.userRepository = userRepository;
     this.userFavoriteFilmsRepository = userFavoriteFilmsRepository;
     this.userOnWatchFilmsRepository = userOnWatchFilmsRepository;
     this.userToWatchFilmsRepository = userToWatchFilmsRepository;
     this.userDropFilmsRepository = userDropFilmsRepository;
-    this.filmRepositoryInterface = filmRepositoryInterface;
+    this.filmRepository = filmRepository;
   }
 
-  @Override
+
   public UserModel getById(Long id) {
-    UserEntity entity = userRepositoryInterface.findById(id).orElse(null);
+    UserEntity entity = userRepository.findById(id).orElse(null);
     return modelMapper.map(entity,UserModel.class);
   }
 
-  @Override
+
   public List<UserModel> getUsers() {
-    Iterable<UserEntity> userEntities = userRepositoryInterface.findAll();
+    Iterable<UserEntity> userEntities = userRepository.findAll();
     List<UserModel> users = new ArrayList<>();
     userEntities.forEach(user->users.add(modelMapper.map(user,UserModel.class)));
     return users;
   }
 
-  @Override
+
   public List<UserModel> searchUsers(String searchTerm) {
-    List<UserEntity> userEntities = userRepositoryInterface.findByUsernameIgnoreCase(searchTerm);
+    List<UserEntity> userEntities = userRepository.findByUsernameIgnoreCase(searchTerm);
     List<UserModel> users = new ArrayList<>();
     userEntities.forEach(user->users.add(modelMapper.map(user,UserModel.class)));
     return users;
   }
 
-  @Override
+
   public Long addOne(UserModel newUser) {
     UserEntity userEntity = modelMapper.map(newUser, UserEntity.class);
-    UserEntity result = userRepositoryInterface.save(userEntity);
+    UserEntity result = userRepository.save(userEntity);
     return 1L;
   }
 
-  @Override
+
   public boolean deleteOne(Long id) {
-    return userRepositoryInterface.deleteUserById(id);
+    return userRepository.deleteUserById(id);
   }
 
-  @Override
+
   public UserModel updateOne(Long id, UserModel userModel) {
-    UserEntity existingUser = userRepositoryInterface.findById(id)
+    UserEntity existingUser = userRepository.findById(id)
         .orElseThrow(() -> new UsernameNotFoundException("User not found"));
 
     if (userModel.getUsername() != null && !userModel.getUsername().isBlank()) {
@@ -138,24 +137,24 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
     }
 
 
-    UserEntity updatedUser = userRepositoryInterface.save(existingUser);
+    UserEntity updatedUser = userRepository.save(existingUser);
 
     return modelMapper.map(updatedUser, UserModel.class);
   }
  public boolean existByUsername(String username){
-   return userRepositoryInterface.existsByUsername(username);
+   return userRepository.existsByUsername(username);
  }
  public boolean existById(Long id){
-    return userRepositoryInterface.existsById(id);
+    return userRepository.existsById(id);
  }
   public boolean existByNameOrEmail(String username,String email){
-    return userRepositoryInterface.existsByUsernameOrEmail(username,email);
+    return userRepository.existsByUsernameOrEmail(username,email);
   }
  public boolean existByEmail(String email){
-    return userRepositoryInterface.existsByEmail(email);
+    return userRepository.existsByEmail(email);
  }
  public UserModel findByUsername(String username){
-   UserEntity result = userRepositoryInterface.findByUsername(username);
+   UserEntity result = userRepository.findByUsername(username);
 
    if (result == null) {
      return null;
@@ -163,7 +162,7 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
     return modelMapper.map(result,UserModel.class);
  }
   public UserModel findByEmail(String email){
-    UserEntity result = userRepositoryInterface.findByEmail(email);
+    UserEntity result = userRepository.findByEmail(email);
     if (result == null) {
       return null;
     }
@@ -245,7 +244,7 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
     List<FilmEntity> favoriteFilmsEntity  = new ArrayList<>();
 
     for(Long filmId : favoriteListInId){
-      filmRepositoryInterface.findById(filmId).ifPresent(favoriteFilmsEntity::add);
+      filmRepository.findById(filmId).ifPresent(favoriteFilmsEntity::add);
     }
     List<FilmModel> favoriteFilms = new ArrayList<>();
     favoriteFilmsEntity.forEach(film->favoriteFilms.add(modelMapper.map(film,FilmModel.class)));
@@ -258,7 +257,7 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
     List<FilmEntity> dropFilmsEntity  = new ArrayList<>();
 
     for(Long filmId : dropListInId){
-      filmRepositoryInterface.findById(filmId).ifPresent(dropFilmsEntity::add);
+      filmRepository.findById(filmId).ifPresent(dropFilmsEntity::add);
     }
     List<FilmModel> dropFilms = new ArrayList<>();
     dropFilmsEntity.forEach(film->dropFilms.add(modelMapper.map(film,FilmModel.class)));
@@ -272,7 +271,7 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
     List<FilmEntity> toWatchFilmsEntity  = new ArrayList<>();
 
     for(Long filmId : toWatchListInId){
-      filmRepositoryInterface.findById(filmId).ifPresent(toWatchFilmsEntity::add);
+      filmRepository.findById(filmId).ifPresent(toWatchFilmsEntity::add);
     }
     List<FilmModel> toWatchFilms = new ArrayList<>();
     toWatchFilmsEntity.forEach(film->toWatchFilms.add(modelMapper.map(film,FilmModel.class)));
@@ -285,7 +284,7 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
     List<FilmEntity> onWatchFilmsEntity  = new ArrayList<>();
 
     for(Long filmId : onWatchListInId){
-      filmRepositoryInterface.findById(filmId).ifPresent(onWatchFilmsEntity::add);
+      filmRepository.findById(filmId).ifPresent(onWatchFilmsEntity::add);
     }
     List<FilmModel> onWatchFilms = new ArrayList<>();
     onWatchFilmsEntity.forEach(film->onWatchFilms.add(modelMapper.map(film,FilmModel.class)));
@@ -293,7 +292,7 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
     return onWatchFilms;
   }
   public void updateWatchProgress(Long userId, List<Map<String, Object>> watchProgress) throws Exception {
-    UserEntity user = userRepositoryInterface.findById(userId).orElseThrow(()->new RuntimeException("user not found"));
+    UserEntity user = userRepository.findById(userId).orElseThrow(()->new RuntimeException("user not found"));
 
 
     String currentProgressString = user.getWatchProgress();
@@ -326,11 +325,11 @@ public class UserDataService implements UserDataAccessInterface<UserModel> {
 
     String updatedProgressString = objectMapper.writeValueAsString(currentProgress);
     user.setWatchProgress(updatedProgressString);
-    userRepositoryInterface.save(user);
+    userRepository.save(user);
   }
   public List<Map<String, Object>> getWatchProgress(Long userId) throws Exception {
 
-    UserEntity user = userRepositoryInterface.findById(userId)
+    UserEntity user = userRepository.findById(userId)
         .orElseThrow(() -> new RuntimeException("User not found"));
 
     if (user.getWatchProgress() == null || user.getWatchProgress().isEmpty()) {

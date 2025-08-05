@@ -3,18 +3,13 @@ package com.kevin.site.services;
 import com.kevin.site.dto.UserLoginDTO;
 import com.kevin.site.dto.UserRegistrationDTO;
 import com.kevin.site.entity.UserEntity;
-import com.kevin.site.models.LoginResponse;
 import com.kevin.site.models.UserModel;
-import com.kevin.site.security.JwtIssuer;
-import com.kevin.site.security.UserPrincipal;
+import com.kevin.site.security.jwt.JwtIssuer;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @Service

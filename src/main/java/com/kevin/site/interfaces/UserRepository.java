@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Component;
 
 @Component
-public interface UserRepositoryInterface extends CrudRepository<UserEntity,Long> {
+public interface UserRepository extends CrudRepository<UserEntity,Long> {
   List<UserEntity> findByUsernameIgnoreCase(String username);
   boolean existsByUsernameOrEmail(String username, String email);
 

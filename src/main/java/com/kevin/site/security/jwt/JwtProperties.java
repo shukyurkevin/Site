@@ -1,4 +1,4 @@
-package com.kevin.site.security;
+package com.kevin.site.security.jwt;
 
 import lombok.Getter;
 import lombok.Setter;

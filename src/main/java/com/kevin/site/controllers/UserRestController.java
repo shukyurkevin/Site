@@ -1,10 +1,9 @@
 package com.kevin.site.controllers;
 
-import com.kevin.site.data.UserDataService;
 import com.kevin.site.models.FilmModel;
 import com.kevin.site.models.UserModel;
 import com.kevin.site.security.UserPrincipal;
-import com.kevin.site.services.FilmService;
+import com.kevin.site.services.FilmServiceImp;
 import com.kevin.site.services.UserService;
 import java.util.List;
 import java.util.Map;
@@ -26,12 +25,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRestController {
 
   UserService userService;
-  FilmService filmService;
+  FilmServiceImp filmServiceImp;
   @Autowired
-  public UserRestController(UserService userService, FilmService filmService){
+  public UserRestController(UserService userService, FilmServiceImp filmServiceImp){
     super();
     this.userService = userService;
-    this.filmService = filmService;
+    this.filmServiceImp = filmServiceImp;
   }
   @GetMapping("/")
   public UserModel UserData(@AuthenticationPrincipal UserPrincipal userPrincipal){
@@ -62,7 +61,7 @@ public class UserRestController {
 
       for (Map<String, Object> entry : progress) {
         Long filmId = ((Number) entry.get("filmId")).longValue();
-        FilmModel film = filmService.getById(filmId);
+        FilmModel film = filmServiceImp.getById(filmId);
 
 
         entry.put("film", film);

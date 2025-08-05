@@ -1,5 +1,6 @@
-package com.kevin.site.security;
+package com.kevin.site.security.jwt;
 
+import com.kevin.site.security.UserPrincipalAuthenticationToken;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -7,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
-import org.codehaus.groovy.util.StringUtil;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;

@@ -4,11 +4,10 @@ import com.kevin.site.dto.UserLoginDTO;
 import com.kevin.site.dto.UserRegistrationDTO;
 import com.kevin.site.entity.RefreshToken;
 import com.kevin.site.entity.UserEntity;
-import com.kevin.site.interfaces.UserRepositoryInterface;
-import com.kevin.site.security.JwtIssuer;
+import com.kevin.site.interfaces.UserRepository;
+import com.kevin.site.security.jwt.JwtIssuer;
 import com.kevin.site.security.UserPrincipal;
 import com.kevin.site.services.AuthService;
-import com.kevin.site.services.EmailService;
 import com.kevin.site.services.RefreshTokenService;
 import jakarta.servlet.http.HttpServletResponse;
 import java.time.Duration;
@@ -32,10 +31,10 @@ public class AuthRestController {
   private final AuthService authService;
   private final RefreshTokenService refreshTokenService;
   private final JwtIssuer jwtIssuer;
-  private final UserRepositoryInterface userRepository;
+  private final UserRepository userRepository;
 
   public AuthRestController(AuthService authService, RefreshTokenService refreshTokenService, JwtIssuer jwtIssuer
-      , UserRepositoryInterface userRepository){
+      , UserRepository userRepository){
     this.authService = authService;
     this.refreshTokenService = refreshTokenService;
     this.jwtIssuer = jwtIssuer;
