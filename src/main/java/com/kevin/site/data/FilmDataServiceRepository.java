@@ -55,7 +55,7 @@ public class FilmDataServiceRepository {
   }
 
   public List<FilmModel> searchByGenres(String searchTerm) {
-    List<FilmEntity> filmEntities = filmRepository.findByGenresContainingIgnoreCase(searchTerm);
+    List<FilmEntity> filmEntities = filmRepository.findByGenresIgnoreSpace(searchTerm.toLowerCase());
     List<FilmModel> films = new ArrayList<>();
     filmEntities.forEach(film->films.add(modelMapper.map(film,FilmModel.class)));
 

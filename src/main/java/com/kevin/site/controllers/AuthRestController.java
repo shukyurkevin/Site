@@ -83,7 +83,8 @@ public class AuthRestController {
     {
 
       UserLoginDTO autologin =
-          UserLoginDTO.builder().username(userDto.getUsername()).password(userDto.getPassword())
+          UserLoginDTO.builder().username(userDto.getUsername()).password(userDto.getPassword()
+              ).rememberMe(userDto.isRememberMe())
               .build();
       String token = authService.auth(autologin);
       UserEntity user = userRepository.findByUsername(autologin.getUsername());

@@ -38,6 +38,7 @@ public class FilmRestController {
   public List<FilmModel> emptySearch() {
     return new ArrayList<>();
   }
+
   @GetMapping("/genres/{searchTerm}")
   public List<FilmModel> searchByGenres(@PathVariable(name = "searchTerm") String x){
 
